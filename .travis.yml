@@ -16,7 +16,7 @@ after_script:
   - git config user.email "return518@126.com"  #修改email
   - git add .
   - git commit -m "update"
-  - git push --force --quiet "https://${q_w}@${GH_REF}" qwblog:master  #GH_TOKEN是在Travis中配置token的名称
+  - git push --force --quiet "https://${q_w}@${GH_REF}" master:master  #GH_TOKEN是在Travis中配置token的名称
 
 branches:
   only:
