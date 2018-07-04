@@ -140,7 +140,7 @@
       labels: {{ theme.algolia_search.labels | json_encode }}
     }
   };
-
+</script>
 
 {% if theme.custom_file_path.head %}
   {% set custom_head = '../../../../../' + theme.custom_file_path.head %}
