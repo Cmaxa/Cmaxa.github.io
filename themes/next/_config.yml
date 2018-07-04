@@ -241,7 +241,7 @@ sidebar:
   b2t: false
 
   # Scroll percent label in b2t button.
-  scrollpercent: true
+  scrollpercent: false
   #返回顶部功能
 
   # Enable sidebar on narrow view (only for Muse | Mist).
@@ -358,7 +358,7 @@ custom_logo:
 # Code Highlight theme
 # Available values: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night
 
 # Enable "cheers" for archive page.
 cheers_enabled: true
