@@ -183,8 +183,7 @@
           <i class="fa fa-arrow-up"></i>
           {% if theme.sidebar.scrollpercent %}
             <span id="scrollpercent">
-            <span>返回顶部</span>
-            <span>0</span>%</span>
+            <span>返回顶部0</span>%</span>
           {% endif %}
         </div>
       {% endif %}
