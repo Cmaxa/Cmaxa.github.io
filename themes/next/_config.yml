@@ -241,7 +241,7 @@ sidebar:
   b2t: false
 
   # Scroll percent label in b2t button.
-  scrollpercent: false
+  scrollpercent: true
   #返回顶部功能
 
   # Enable sidebar on narrow view (only for Muse | Mist).
