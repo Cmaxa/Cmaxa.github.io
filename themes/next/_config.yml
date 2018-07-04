@@ -245,7 +245,7 @@ sidebar:
   #返回顶部功能
 
   # Enable sidebar on narrow view (only for Muse | Mist).
-  onmobile: false
+  onmobile: true
 
 
 # ---------------------------------------------------------------
