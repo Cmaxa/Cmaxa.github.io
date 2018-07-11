@@ -182,7 +182,7 @@
         <div class="back-to-top">
           <i class="fa fa-arrow-up"></i>
           {% if theme.sidebar.scrollpercent %}
-          <span>返回顶部</span>
+            <span>返回顶部</span>
             <span id="scrollpercent"><span>0</span>%</span>
           {% endif %}
         </div>
