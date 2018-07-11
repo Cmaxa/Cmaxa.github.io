@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="声明    本安装指南采用传统BIOS+BMR分区方案+GRUB引导，适用于早期的电脑，现在大多数电脑基本是UEFI+GPT的方案，这种安装方式将再下一篇文章中介绍。虽然Linux对BIOS的分区方案没有严格限制，但是Windows上却有，基于这点考量，最好采用BIOS+MBR或者UEFI+GPT的方式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows7+Archlinux双系统安装指南">
+<meta property="og:url" content="http://yoursite.com/2.html">
+<meta property="og:site_name" content="Max_Man&#39;s blogs">
+<meta property="og:description" content="声明    本安装指南采用传统BIOS+BMR分区方案+GRUB引导，适用于早期的电脑，现在大多数电脑基本是UEFI+GPT的方案，这种安装方式将再下一篇文章中介绍。虽然Linux对BIOS的分区方案没有严格限制，但是Windows上却有，基于这点考量，最好采用BIOS+MBR或者UEFI+GPT的方式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-11T07:49:32.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows7+Archlinux双系统安装指南">
+<meta name="twitter:description" content="声明    本安装指南采用传统BIOS+BMR分区方案+GRUB引导，适用于早期的电脑，现在大多数电脑基本是UEFI+GPT的方案，这种安装方式将再下一篇文章中介绍。虽然Linux对BIOS的分区方案没有严格限制，但是Windows上却有，基于这点考量，最好采用BIOS+MBR或者UEFI+GPT的方式。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Windows7+Archlinux双系统安装指南 | Max_Man's blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Max_Man's blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Net Boy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Max_Man's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Windows7+Archlinux双系统安装指南
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-02 16:55:52" itemprop="dateCreated datePublished" datetime="2018-06-02T16:55:52+00:00">2018-06-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-07-11 07:49:32" itemprop="dateModified" datetime="2018-07-11T07:49:32+00:00">2018-07-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>    本安装指南采用传统BIOS+BMR分区方案+GRUB引导，适用于早期的电脑，现在大多数电脑基本是UEFI+GPT的方案，这种安装方式将再下一篇文章中介绍。虽然Linux对BIOS的分区方案没有严格限制，但是Windows上却有，基于这点考量，最好采用BIOS+MBR或者UEFI+GPT的方式。<br><a id="more"></a></p>
+<h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><p>已经安装好的windows7系统（本文不会教你如何安装windows系统）<br>准备好大小足够的U盘（能制作启动盘即可）</p>
+<h3 id="制作启动盘"><a href="#制作启动盘" class="headerlink" title="制作启动盘:"></a>制作启动盘:</h3><h4 id="下载Archlinux镜像点击下载"><a href="#下载Archlinux镜像点击下载" class="headerlink" title="下载Archlinux镜像点击下载"></a>下载Archlinux镜像<a href="https://www.archlinux.org/" target="_blank" rel="noopener">点击下载</a></h4><h4 id="制作启动盘（这里推荐使用rufus）"><a href="#制作启动盘（这里推荐使用rufus）" class="headerlink" title="制作启动盘（这里推荐使用rufus）"></a>制作启动盘（这里推荐使用rufus）</h4><p>打开运行窗口（快捷键：win + R）输入diskmgmt.msc，打开磁盘管理工具，从原有的磁盘中划分出一部分作为安装Archlinux的分区（如果在安装Windows的时候已经保留了安装分区，那么这步可以省略）<br>重启电脑，进入BIOS，设置第一启动项为U盘并重启电脑<br>安装Archlinux<br>1.连接WIFI<br>Archlinux提供的base中包含netctl、dhcpcd、iw、wpa_supplicant等WiFi连接工具。<br>     在命令行键入wifi-menu连接WiFi，wifi-menu会提供命令行窗口让你选择要连接的wifi。</p>
+<h3 id="注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入："><a href="#注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入：" class="headerlink" title="注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入："></a>注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--------------------- 手动连接WiFi ---------------------------</span><br><span class="line">ip link <span class="comment">#查看你的网卡接口标识</span></span><br><span class="line">ip link <span class="built_in">set</span> <span class="variable">$iw</span> up <span class="comment"># 这里的$iw用上面查出的网卡标识替换，这个命令用于打开网卡接口</span></span><br><span class="line">iw dev <span class="variable">$iw</span> scan | less <span class="comment">#用于扫描WiFi信息，如果你知道你需要连接WiFi的SSID，那么这一步可以省略</span></span><br><span class="line">wpa_supplicant -B -i <span class="variable">$iw</span> -c &lt;(wpa_passphrase <span class="variable">$SSID</span> <span class="variable">$pass</span>) <span class="comment"># $SSID代表你WiFi的ID，$pass代表你的wifi密码</span></span><br><span class="line">iw dev <span class="variable">$iw</span> link <span class="comment">#查看wifi是否连接成功</span></span><br></pre></td></tr></table></figure>
+<h3 id="WiFi连接成功后，通过命令：dhcpcd-iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入"><a href="#WiFi连接成功后，通过命令：dhcpcd-iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入" class="headerlink" title="WiFi连接成功后，通过命令：dhcpcd $iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入:"></a>WiFi连接成功后，通过命令：dhcpcd $iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip addr add 192.168.1.111/24 broadcast 192.168.1.255 dev <span class="variable">$iw</span> <span class="comment">#ip地址和子网掩码根据你实际的情况替换</span></span><br><span class="line">ip route add default via 192.168.1.1 dev <span class="variable">$iw</span> <span class="comment">#设置默认网关</span></span><br></pre></td></tr></table></figure>
+<p>2.基本设置+分区方案+安装Archlinux</p>
+<h4 id="磁盘分区："><a href="#磁盘分区：" class="headerlink" title="磁盘分区："></a>磁盘分区：</h4> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> ping -c 4 www.baidu.com <span class="comment">#如果ping不通，执行（echo 'nameserver 8.8.8.8' &gt;&gt; /etc/resolv.conf）</span></span><br><span class="line">timedatectl <span class="built_in">set</span>-ntp <span class="literal">true</span> <span class="comment">#更新系统时钟</span></span><br><span class="line">cfdisk <span class="comment">#这个工具会提供一个命令行界面进行分区，根据你的需要进行分区</span></span><br><span class="line">       <span class="comment"># / 分区，类型为linux(必须)</span></span><br><span class="line">       <span class="comment"># /home，类型linux（可选，但建议）</span></span><br><span class="line">       <span class="comment"># swap,类型为linux swap(swap和系统休眠有关，建议根据你的内存大小分配，内存大的交换分区可以分小点，小的可以分大点。当然，你也可以不分)</span></span><br><span class="line">       <span class="comment"># 分区完记得写入</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置文件系统"><a href="#设置文件系统" class="headerlink" title="设置文件系统"></a>设置文件系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdax <span class="comment"># 磁盘sdax为你划分的linux分区，可以通过fdisk -l查看详细的分区信息，所有linux类型分区都要刷入ext4文件系统</span></span><br><span class="line">mkswap /dev/sdax <span class="comment"># sdax为你所划分的swap分区表示，没有这步可省略</span></span><br><span class="line">swapon /dev/sdax <span class="comment"># 开启swap，没有划分swap，这步可省略</span></span><br></pre></td></tr></table></figure>
+<h3 id="挂载linux分区目录"><a href="#挂载linux分区目录" class="headerlink" title="挂载linux分区目录"></a>挂载linux分区目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdax /mnt </span><br><span class="line">mkdir /mnt/home <span class="comment">#如果没有home分区，这步省略</span></span><br><span class="line">mount /dev/sdax /mnt/home <span class="comment">#如果有没有划分home目录的话，这步省略，如果你还划分了其它目录，也是同样的挂载方法</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装Archlinux"><a href="#安装Archlinux" class="headerlink" title="安装Archlinux"></a>安装Archlinux</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.d/mirrorlist <span class="comment"># 把合适的源调整到第一，比如国内，把china源调整到第一</span></span><br><span class="line">                             <span class="comment"># 这点很重要，不然联网下载包时会很慢</span></span><br><span class="line">pacstrap /mnt base</span><br><span class="line">pacstrap /mnt base-devel <span class="comment">#安装常用开发工具，可以选择不装，但建议安装</span></span><br></pre></td></tr></table></figure>
+<h3 id="生成分区表文件"><a href="#生成分区表文件" class="headerlink" title="生成分区表文件"></a>生成分区表文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U /mnt &gt; /mnt/etc/fstab <span class="comment"># -U代表用UUID表示分区</span></span><br></pre></td></tr></table></figure>
+<h3 id="切换root"><a href="#切换root" class="headerlink" title="切换root"></a>切换root</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+<h3 id="基本设置和引导启动"><a href="#基本设置和引导启动" class="headerlink" title="基本设置和引导启动"></a>基本设置和引导启动</h3><h4 id="安装常用工具"><a href="#安装常用工具" class="headerlink" title="安装常用工具"></a>安装常用工具</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim</span><br><span class="line">pacman -S iw wpa_supplicant dialog</span><br><span class="line">pacman -S ntfs-3g</span><br></pre></td></tr></table></figure>
+<h3 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Region/City /etc/localtime <span class="comment"># Region和City根据你的情况修改，在国内为/Asia/ShangHai</span></span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
+<h3 id="设置语言环境"><a href="#设置语言环境" class="headerlink" title="设置语言环境"></a>设置语言环境</h3><p>#先编辑/etc/locale.gen文件，将en_US.UTF-8 UTF-8注释取消掉，编辑工具可以使用vim<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">locale-gen <span class="comment"># 生成其它需要的本地化文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'LANG=en_US.UTF-8'</span> &gt;&gt; /etc/locale.conf</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置hostname"><a href="#设置hostname" class="headerlink" title="设置hostname"></a>设置hostname</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'you host name'</span> &gt; /etc/hostname</span><br></pre></td></tr></table></figure>
+<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<h3 id="安装微码（非Intel-CPU可跳过）"><a href="#安装微码（非Intel-CPU可跳过）" class="headerlink" title="安装微码（非Intel CPU可跳过）"></a>安装微码（非Intel CPU可跳过）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S intel-ucode</span><br></pre></td></tr></table></figure>
+<h3 id="引导系统启动"><a href="#引导系统启动" class="headerlink" title="引导系统启动"></a>引导系统启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br><span class="line">chattr -i /boot/grub/i386-pc/core.img</span><br><span class="line">grub-install --target=i386-pc --debug --force /dev/sdaX</span><br><span class="line">chattr +i /boot/grub/i386-pc/core.img</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br><span class="line">my_windows_part=/dev/sdax <span class="comment"># sdax代表你的windows C盘目录，一般是sda2</span></span><br><span class="line">my_boot_part=/dev/sdax <span class="comment"># sdax代表你的linux /分区目录</span></span><br><span class="line">mkdir -p /media/win</span><br><span class="line">mount -t ntfs-3g <span class="variable">$my_windows_part</span> /media/win</span><br><span class="line">dd <span class="keyword">if</span>=<span class="variable">$my_boot_part</span> of=/media/win/linux.bin bs=512 count=1 <span class="comment">#这个命令会在你的windows C盘根目录底下生成linux.bin文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="重启进入windows，以管理员的方式打开命令行"><a href="#重启进入windows，以管理员的方式打开命令行" class="headerlink" title="重启进入windows，以管理员的方式打开命令行"></a>重启进入windows，以管理员的方式打开命令行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bcdedit /create /d <span class="string">"Linux"</span> /application BOOTSECTOR <span class="comment"># 生成启动标识，生成结果就是下面的ID, "Linux"可以替换成任何你想在显示的内容</span></span><br><span class="line">bcdedit /<span class="built_in">set</span> &#123;ID&#125; device partition=C:</span><br><span class="line">bcdedit /<span class="built_in">set</span> &#123;ID&#125;  path \linux.bin</span><br><span class="line">bcdedit /displayorder &#123;ID&#125; /addlast</span><br><span class="line">bcdedit /timeout 30</span><br></pre></td></tr></table></figure>
+<h2 id="Finished-重启即可！"><a href="#Finished-重启即可！" class="headerlink" title="Finished! 重启即可！"></a>Finished! 重启即可！</h2><p>作者：我懒得取名<br><a href="https://www.jianshu.com/p/27ea66e1838c" target="_blank" rel="noopener">链接：</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/1.html" rel="next" title="我的第一篇Code!">
+                <i class="fa fa-chevron-left"></i> 我的第一篇Code!
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/3.html" rel="prev" title="Links 图标 下载地址">
+                Links 图标 下载地址 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Net Boy</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.</span> <span class="nav-text">声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装前准备"><span class="nav-number">1.1.</span> <span class="nav-text">安装前准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#制作启动盘"><span class="nav-number">1.2.</span> <span class="nav-text">制作启动盘:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载Archlinux镜像点击下载"><span class="nav-number">1.2.1.</span> <span class="nav-text">下载Archlinux镜像点击下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作启动盘（这里推荐使用rufus）"><span class="nav-number">1.2.2.</span> <span class="nav-text">制作启动盘（这里推荐使用rufus）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入："><span class="nav-number">1.3.</span> <span class="nav-text">注意，如果连接失败请尝试手动进行WiFi连接，在命令行输入：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WiFi连接成功后，通过命令：dhcpcd-iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入"><span class="nav-number">1.4.</span> <span class="nav-text">WiFi连接成功后，通过命令：dhcpcd $iw来自动分配IP地址。你同样可以手动分配静态IP，在命令行输入:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘分区："><span class="nav-number">1.4.1.</span> <span class="nav-text">磁盘分区：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置文件系统"><span class="nav-number">1.5.</span> <span class="nav-text">设置文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载linux分区目录"><span class="nav-number">1.6.</span> <span class="nav-text">挂载linux分区目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Archlinux"><span class="nav-number">1.7.</span> <span class="nav-text">安装Archlinux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成分区表文件"><span class="nav-number">1.8.</span> <span class="nav-text">生成分区表文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换root"><span class="nav-number">1.9.</span> <span class="nav-text">切换root</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本设置和引导启动"><span class="nav-number">1.10.</span> <span class="nav-text">基本设置和引导启动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装常用工具"><span class="nav-number">1.10.1.</span> <span class="nav-text">安装常用工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置时区"><span class="nav-number">1.11.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置语言环境"><span class="nav-number">1.12.</span> <span class="nav-text">设置语言环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置hostname"><span class="nav-number">1.13.</span> <span class="nav-text">设置hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置root密码"><span class="nav-number">1.14.</span> <span class="nav-text">设置root密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装微码（非Intel-CPU可跳过）"><span class="nav-number">1.15.</span> <span class="nav-text">安装微码（非Intel CPU可跳过）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引导系统启动"><span class="nav-number">1.16.</span> <span class="nav-text">引导系统启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启进入windows，以管理员的方式打开命令行"><span class="nav-number">1.17.</span> <span class="nav-text">重启进入windows，以管理员的方式打开命令行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finished-重启即可！"><span class="nav-number">2.</span> <span class="nav-text">Finished! 重启即可！</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Net Boy</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
